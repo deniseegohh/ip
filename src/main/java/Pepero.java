@@ -81,6 +81,13 @@ public class Pepero {
                     System.out.println(task.toString());
                     System.out.println("Now you have " + task.getTaskCount() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
+                } else if (command.equals("delete")) {
+                    int deletedTaskIndex = Integer.parseInt(parts[1]);
+                    System.out.println("I will remove this task");
+                    System.out.println(tasks.get(deletedTaskIndex - 1).toString());
+                    tasks.remove(deletedTaskIndex - 1);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    System.out.println("____________________________________________________________");
                 } else {
                     throw new PeperoException("I'm sorry I don't quite understand :(");
                 }
