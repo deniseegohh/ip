@@ -1,12 +1,15 @@
 public class Task {
 
-    private final String description;
-    private boolean isDone;
+    protected final String description;
+    protected boolean isDone;
+    protected static int taskCount = 0;
 
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
+
+    public int getTaskCount() {return taskCount;}
 
     public String getDescription() {
         return description;
@@ -26,5 +29,9 @@ public class Task {
         } else {
             return("[ ]");
         }
+    }
+
+    public String toString() {
+        return "";
     }
 }
