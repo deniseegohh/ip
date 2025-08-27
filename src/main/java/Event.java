@@ -10,6 +10,13 @@ public class Event extends Task {
         taskCount++;
     }
 
+    public Event(String description, String from, String to, boolean isDone) {
+        super(description);
+        this.from = from;
+        this.to = to;
+        this.isDone = isDone;
+    }
+
     @Override
     public String getStatusIcon() {
         if (isDone) {
@@ -22,6 +29,11 @@ public class Event extends Task {
     @Override
     public String toString() {
         return this.getStatusIcon() + " " + this.getDescription() + " (from: " + from + " to: " + to + ")";
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + "-" + to;
     }
 }
 

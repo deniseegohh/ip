@@ -5,6 +5,11 @@ public class ToDo extends Task {
         taskCount++;
     }
 
+    public ToDo(String description, boolean isDone) {
+        super(description);
+        this.isDone = isDone;
+    }
+
     @Override
     public String getStatusIcon() {
         if (isDone) {
@@ -17,5 +22,10 @@ public class ToDo extends Task {
     @Override
     public String toString() {
         return this.getStatusIcon() + " " + this.getDescription();
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "T | " + (isDone ? "1" : "0") + " | " + description;
     }
 }
