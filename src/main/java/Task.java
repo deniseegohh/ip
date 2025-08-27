@@ -34,4 +34,6 @@ public class Task {
     public String toString() {
         return "";
     }
+
+    public String toFileFormat() {return "";}
 }
