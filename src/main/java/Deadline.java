@@ -1,14 +1,17 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
 
-    protected String by;
+    protected LocalDateTime by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
         taskCount++;
     }
 
-    public Deadline(String description, String by, boolean isDone) {
+    public Deadline(String description, LocalDateTime by, boolean isDone) {
         super(description);
         this.by = by;
         this.isDone = isDone;
@@ -26,11 +29,11 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return this.getStatusIcon() + " " + this.getDescription() + " (by: " + this.by + ")";
+        return this.getStatusIcon() + " " + this.getDescription() + " (by: " + by.format(DateTimeFormatter.ofPattern("ddMMyy HHmm")) + ")";
     }
 
     @Override
     public String toFileFormat() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by.format(DateTimeFormatter.ofPattern("ddMMyy HHmm"));
     }
 }

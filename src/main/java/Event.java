@@ -1,16 +1,19 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
 
-    protected String from;
-    protected String to;
+    protected LocalDateTime from;
+    protected LocalDateTime to;
 
-    public Event(String description, String from, String to) {
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description);
         this.from = from;
         this.to = to;
         taskCount++;
     }
 
-    public Event(String description, String from, String to, boolean isDone) {
+    public Event(String description, LocalDateTime from, LocalDateTime to, boolean isDone) {
         super(description);
         this.from = from;
         this.to = to;
@@ -28,12 +31,12 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return this.getStatusIcon() + " " + this.getDescription() + " (from: " + from + " to: " + to + ")";
+        return this.getStatusIcon() + " " + this.getDescription() + " (from: " + from.format(DateTimeFormatter.ofPattern("ddMMyy HHmm")) + " to: " + to.format(DateTimeFormatter.ofPattern("ddMMyy HHmm")) + ")";
     }
 
     @Override
     public String toFileFormat() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + "-" + to;
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from.format(DateTimeFormatter.ofPattern("ddMMyy HHmm")) + "-" + to.format(DateTimeFormatter.ofPattern("ddMMyy HHmm"));
     }
 }
 

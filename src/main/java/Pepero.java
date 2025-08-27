@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class Pepero {
 
@@ -8,6 +10,7 @@ public class Pepero {
         Scanner sc = new Scanner(System.in);
         Storage storage = new Storage("./data/pepero.txt");
         ArrayList<Task> tasks = storage.load();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
         System.out.println("Loaded tasks:");
         for (Task task : tasks) {
@@ -66,7 +69,7 @@ public class Pepero {
                         ToDo task = new ToDo(parts[1]);
                         tasks.add(task);
                         System.out.println("added: ");
-                        System.out.println(task.toString());
+                        System.out.println(task);
                         System.out.println("Now you have " + task.getTaskCount() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                         break;
@@ -76,13 +79,13 @@ public class Pepero {
                             throw new PeperoException("description of deadline empty :(");
                         }
                         String deadlineParts = parts[1];
-                        String[] otherPart = deadlineParts.split("/by", 2);
+                        String[] otherPart = deadlineParts.split("/by ", 2);
                         String description = otherPart[0];
                         String deadline = otherPart[1];
-                        Deadline task = new Deadline(description, deadline);
+                        Deadline task = new Deadline(description, LocalDateTime.parse(deadline, formatter));
                         tasks.add(task);
                         System.out.println("added:");
-                        System.out.println(task.toString());
+                        System.out.println(task);
                         System.out.println("Now you have " + task.getTaskCount() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                         break;
@@ -96,10 +99,10 @@ public class Pepero {
                         String description = otherPart[0];
                         String from = otherPart[1].split(" ", 2)[1];
                         String to = otherPart[2].split(" ", 2)[1];
-                        Event task = new Event(description, from, to);
+                        Event task = new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to,formatter));
                         tasks.add(task);
                         System.out.println("added: ");
-                        System.out.println(task.toString());
+                        System.out.println(task);
                         System.out.println("Now you have " + task.getTaskCount() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                         break;
