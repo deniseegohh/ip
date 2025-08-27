@@ -1,6 +1,6 @@
 todo read book
-deadline submit report /by Sunday
-event project meeting /from 2pm /to 5pm
+deadline submit report /by 280825 0900
+event project meeting /from 280825 0900/to 300825 1300
 list
 mark 2
 list

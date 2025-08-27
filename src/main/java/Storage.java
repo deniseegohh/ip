@@ -3,9 +3,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class Storage {
-    private String filePath;
+    private final String filePath;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
     public Storage(String filePath) {
         this.filePath = filePath;
@@ -59,12 +62,12 @@ public class Storage {
                 return new ToDo(description, isDone);
 
             case "D":
-                return new Deadline(description, parts[3], isDone);
+                return new Deadline(description, LocalDateTime.parse(parts[3], formatter), isDone);
 
             case "E":
                 String from = parts[3].split("-")[0];
                 String to = parts[3].split("-")[1];
-                return new Event(description, from, to, isDone);
+                return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter), isDone);
 
             default:
                 return null;
