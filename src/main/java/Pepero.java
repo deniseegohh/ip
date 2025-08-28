@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class Pepero {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Ui ui = new Ui();
         Storage storage = new Storage("./data/pepero.txt");
         ArrayList<Task> tasks = storage.load();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
@@ -17,15 +17,12 @@ public class Pepero {
             System.out.println(task);
         }
 
-
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Pepero! \nWhat can I do for you?");
-        System.out.println("____________________________________________________________");
+        ui.printWelcome();
 
         label:
         while (true) {
             try {
-                String input = sc.nextLine();
+                String input = ui.readInput();
                 String[] parts = input.split(" ", 2);
                 String command = parts[0];
                 System.out.println("____________________________________________________________");
@@ -33,8 +30,7 @@ public class Pepero {
                 switch (command) {
                     case "bye":
                         storage.save(tasks);
-                        System.out.println("Bye bye!~ Hope to see you again soon~");
-                        System.out.println("____________________________________________________________");
+                        ui.printExit();
                         break label;
 
                     case "list":
@@ -132,6 +128,6 @@ public class Pepero {
             }
         }
 
-        sc.close();
+        ui.exit();
     }
 }
