@@ -5,119 +5,30 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 public class Pepero {
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Ui ui = new Ui();
         Storage storage = new Storage("./data/pepero.txt");
-        ArrayList<Task> tasks = storage.load();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
-
-        System.out.println("Loaded tasks:");
-        for (Task task : tasks) {
-            System.out.println(task);
-        }
-
-
-        System.out.println("____________________________________________________________");
-        System.out.println("Hello! I'm Pepero! \nWhat can I do for you?");
-        System.out.println("____________________________________________________________");
+        TaskList tasks = storage.load();
+        ui.printWelcome();
+        ui.printTaskList(tasks);
 
         label:
         while (true) {
             try {
-                String input = sc.nextLine();
-                String[] parts = input.split(" ", 2);
-                String command = parts[0];
-                System.out.println("____________________________________________________________");
+                String input = ui.readInput();
+                ui.printLine();
 
-                switch (command) {
-                    case "bye":
-                        storage.save(tasks);
-                        System.out.println("Bye bye!~ Hope to see you again soon~");
-                        System.out.println("____________________________________________________________");
-                        break label;
-
-                    case "list":
-                        System.out.println("Here are the tasks in your list:");
-                        for (int i = 1; i <= tasks.size(); i++) {
-                            System.out.println(i + "." + tasks.get(i - 1).toString());
-                        }
-                        System.out.println("____________________________________________________________");
-                        break;
-                    case "mark": {
-                        int number = Integer.parseInt(parts[1]);
-                        Task task = tasks.get(number - 1);
-                        task.markDone();
-                        System.out.println("Nice! I've marked this task as done:");
-                        System.out.println(task.getStatusIcon() + " " + task.getDescription());
-                        System.out.println("____________________________________________________________");
-                        break;
-                    }
-                    case "unmark": {
-                        int number = Integer.parseInt(parts[1]);
-                        Task task = tasks.get(number - 1);
-                        task.unmarkDone();
-                        System.out.println("Okay, I've marked this task as not done yet:");
-                        System.out.println(task.getStatusIcon() + " " + task.getDescription());
-                        System.out.println("____________________________________________________________");
-                        break;
-                    }
-                    case "todo": {
-                        if (parts.length < 2) {
-                            throw new PeperoException("description of todo empty :(");
-                        }
-                        ToDo task = new ToDo(parts[1]);
-                        tasks.add(task);
-                        System.out.println("added: ");
-                        System.out.println(task);
-                        System.out.println("Now you have " + task.getTaskCount() + " tasks in the list.");
-                        System.out.println("____________________________________________________________");
-                        break;
-                    }
-                    case "deadline": {
-                        if (parts.length < 2) {
-                            throw new PeperoException("description of deadline empty :(");
-                        }
-                        String deadlineParts = parts[1];
-                        String[] otherPart = deadlineParts.split("/by ", 2);
-                        String description = otherPart[0];
-                        String deadline = otherPart[1];
-                        Deadline task = new Deadline(description, LocalDateTime.parse(deadline, formatter));
-                        tasks.add(task);
-                        System.out.println("added:");
-                        System.out.println(task);
-                        System.out.println("Now you have " + task.getTaskCount() + " tasks in the list.");
-                        System.out.println("____________________________________________________________");
-                        break;
-                    }
-                    case "event": {
-                        if (parts.length < 2) {
-                            throw new PeperoException("description of event empty :(");
-                        }
-                        String eventParts = parts[1];
-                        String[] otherPart = eventParts.split("/", 3);
-                        String description = otherPart[0];
-                        String from = otherPart[1].split(" ", 2)[1];
-                        String to = otherPart[2].split(" ", 2)[1];
-                        Event task = new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to,formatter));
-                        tasks.add(task);
-                        System.out.println("added: ");
-                        System.out.println(task);
-                        System.out.println("Now you have " + task.getTaskCount() + " tasks in the list.");
-                        System.out.println("____________________________________________________________");
-                        break;
-                    }
-                    case "delete":
-                        int deletedTaskIndex = Integer.parseInt(parts[1]);
-                        System.out.println("I will remove this task");
-                        System.out.println(tasks.get(deletedTaskIndex - 1).toString());
-                        tasks.remove(deletedTaskIndex - 1);
-                        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                        System.out.println("____________________________________________________________");
-                        break;
-                    default:
-                        throw new PeperoException("I'm sorry I don't quite understand :(");
+                if (input.equals("bye")) {
+                    Parser.parse(input, tasks, ui, storage);
+                    break;
                 }
+
+                Parser.parse(input, tasks, ui, storage);
+
             } catch (PeperoException e) {
                 System.out.println(" " + e.getMessage());
                 System.out.println("____________________________________________________________");
@@ -132,6 +43,6 @@ public class Pepero {
             }
         }
 
-        sc.close();
+        ui.exit();
     }
 }

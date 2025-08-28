@@ -14,8 +14,8 @@ public class Storage {
         this.filePath = filePath;
     }
 
-    public ArrayList<Task> load() {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public TaskList load() {
+        TaskList tasks = new TaskList();
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -29,7 +29,7 @@ public class Storage {
                 String line = sc.nextLine();
                 Task task = parseTask(line);
                 if (task != null) {
-                    tasks.add(task);
+                    tasks.addTask(task);
                 }
             }
             sc.close();
@@ -39,9 +39,9 @@ public class Storage {
         return tasks;
     }
 
-    public void save(ArrayList<Task> tasks) throws IOException {
+    public void save(TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
-        for (Task task : tasks) {
+        for (Task task : tasks.getTasks()) {
             fw.write(task.toFileFormat() + System.lineSeparator());
         }
         fw.close();
