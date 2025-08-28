@@ -8,9 +8,9 @@ public class Ui {
     }
 
     public void printWelcome() {
-        System.out.println("____________________________________________________________");
+        printLine();
         System.out.println("Hello! I'm Pepero! \nWhat can I do for you?");
-        System.out.println("____________________________________________________________");
+        printLine();
     }
 
     public void printLine() {
@@ -19,7 +19,44 @@ public class Ui {
 
     public void printExit() {
         System.out.println("Bye bye!~ Hope to see you again soon~");
-        System.out.println("____________________________________________________________");
+        printLine();
+    }
+
+    public void printTaskList(TaskList tasks) {
+        System.out.println("Here are the tasks in your list:");
+        for (int i = 1; i <= tasks.getTasks().size(); i++) {
+            System.out.println(i + "." + tasks.getTasks().get(i - 1).toString());
+        }
+        printLine();
+    }
+
+    public void printMark(Task task) {
+        System.out.println("Nice! I've marked this task as done:");
+        System.out.println(task.getStatusIcon() + " " + task.getDescription());
+        printLine();
+    }
+
+    public void printUnmark(Task task) {
+        System.out.println("Okay, I've marked this task as not done yet:");
+        System.out.println(task.getStatusIcon() + " " + task.getDescription());
+        printLine();
+    }
+
+    public void printAddTask(Task task) {
+        System.out.println("added: ");
+        System.out.println(task);
+        printLine();
+    }
+
+    public void printDeleteTask(Task task) {
+        System.out.println("I will remove this task:");
+        System.out.println(task);
+        printLine();
+    }
+
+    public void printTaskCount(TaskList tasks) {
+        System.out.println("Now you have " + tasks.getTasks().size() + " tasks in the list.");
+        printLine();
     }
 
     public String readInput() {
