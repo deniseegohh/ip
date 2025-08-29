@@ -3,9 +3,7 @@ package pepero;
 import org.junit.jupiter.api.Test;
 import pepero.task.TaskList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public class ParserTest {
 
@@ -15,8 +13,6 @@ public class ParserTest {
         Ui ui = new Ui();
         Storage storage = new Storage("data/pepero.txt");
 
-        assertThrows(PeperoException.class, () -> {
-            Parser.parse("abracadabra", tasks, ui, storage);
-        });
+        assertThrows(PeperoException.class, () -> Parser.parse("abracadabra", tasks, ui, storage));
     }
 }
