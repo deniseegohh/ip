@@ -1,7 +1,14 @@
+package pepero;
+
+import pepero.task.Task;
+import pepero.task.TaskList;
+import pepero.task.ToDo;
+import pepero.task.Deadline;
+import pepero.task.Event;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;

@@ -1,3 +1,8 @@
+package pepero;
+
+import pepero.task.Task;
+import pepero.task.TaskList;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -9,7 +14,7 @@ public class Ui {
 
     public void printWelcome() {
         printLine();
-        System.out.println("Hello! I'm Pepero! \nWhat can I do for you?");
+        System.out.println("Hello! I'm Pepero.Pepero! \nWhat can I do for you?");
         printLine();
     }
 

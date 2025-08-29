@@ -1,3 +1,5 @@
+package pepero.task;
+
 public class Task {
 
     protected final String description;

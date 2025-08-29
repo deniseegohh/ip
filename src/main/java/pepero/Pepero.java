@@ -1,8 +1,8 @@
+package pepero;
+
+import pepero.task.TaskList;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 
 public class Pepero {
     private Storage storage;
@@ -33,10 +33,10 @@ public class Pepero {
                 System.out.println(" " + e.getMessage());
                 System.out.println("____________________________________________________________");
             } catch (NumberFormatException e) {
-                System.out.println(" OOPS!!! Task number must be an integer.");
+                System.out.println(" OOPS!!! Pepero.Task number must be an integer.");
                 System.out.println("____________________________________________________________");
             } catch (IndexOutOfBoundsException e) {
-                System.out.println(" OOPS!!! Task number out of range.");
+                System.out.println(" OOPS!!! Pepero.Task number out of range.");
                 System.out.println("____________________________________________________________");
             } catch (IOException e) {
                 throw new RuntimeException(e);
