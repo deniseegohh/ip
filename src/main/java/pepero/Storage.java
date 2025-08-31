@@ -13,14 +13,28 @@ import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
+/**
+ * Handles loading from and saving tasks to a file.
+ */
 public class Storage {
     private final String filePath;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
+    /**
+     * Constructs a new Storage object for the given file path.
+     *
+     * @param filePath the path of the file to load from and save to
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Load tasks from the file and returns them as a TaskList.
+     * If the file does not exist, it will be created and an empty TaskList is returned.
+     *
+     * @return a TaskList containing tasks loaded from the file
+     */
     public TaskList load() {
         TaskList tasks = new TaskList();
         try {
@@ -46,6 +60,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the task in the given TaskList to the file.
+     *
+     * @param tasks the TaskList to save
+     * @throws IOException if an error occurs while writing to the file
+     */
     public void save(TaskList tasks) throws IOException {
         FileWriter fw = new FileWriter(filePath);
         for (Task task : tasks.getTasks()) {
@@ -54,6 +74,12 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Parses a single line from the file and returns the corresponding Task object.
+     *
+     * @param line the line from the file representing a task
+     * @return the Task object corresponding to the line, or null if the line is not a Task.
+     */
     private Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) {
