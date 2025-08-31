@@ -94,6 +94,15 @@ public class Parser {
                 break;
             }
 
+            case "find": {
+                if (parts.length < 2) {
+                    throw new PeperoException("description of find empty :(");
+                }
+                String keyword = parts[1];
+                ui.printFindResults(tasks.findTasks(keyword));
+                break;
+            }
+
             default: {
                 throw new PeperoException("I'm sorry I don't quite understand :(");
             }
