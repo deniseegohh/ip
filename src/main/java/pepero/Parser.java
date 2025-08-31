@@ -14,6 +14,15 @@ public class Parser {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
+    /**
+     * Parses a user input string and executes the corresponding command on the task list.
+     * @param input user input string to parse
+     * @param tasks the TaskList object where tasks are stored and modified
+     * @param ui the Ui object used that handles interactions with the user
+     * @param storage the Storage object used to save the tasks to persistent storage
+     * @throws PeperoException if the input is invalid or a required description is missing
+     * @throws IOException if saving tasks to storage fails
+     */
     public static void parse(String input, TaskList tasks, Ui ui, Storage storage) throws PeperoException, IOException {
         String[] parts = input.split(" ", 2);
         String command = parts[0];
