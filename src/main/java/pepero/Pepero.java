@@ -4,11 +4,19 @@ import pepero.task.TaskList;
 
 import java.io.IOException;
 
+/**
+ * The main class for the Pepero application.
+ */
 public class Pepero {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * The entry point of the Pepero application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         Ui ui = new Ui();
         Storage storage = new Storage("./data/pepero.txt");
