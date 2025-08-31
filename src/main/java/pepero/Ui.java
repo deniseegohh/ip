@@ -3,6 +3,7 @@ package pepero;
 import pepero.task.Task;
 import pepero.task.TaskList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -101,6 +102,14 @@ public class Ui {
      */
     public void printTaskCount(TaskList tasks) {
         System.out.println("Now you have " + tasks.getTasks().size() + " tasks in the list.");
+        printLine();
+    }
+
+    public void printFindResults(ArrayList<Task> tasks) {
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 1; i <= tasks.size(); i++) {
+            System.out.println(i + "." + tasks.get(i - 1).toString());
+        }
         printLine();
     }
 
