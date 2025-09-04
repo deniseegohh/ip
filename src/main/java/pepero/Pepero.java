@@ -51,6 +51,24 @@ public class Pepero {
             }
         }
 
+
+
         ui.exit();
+    }
+
+    public Pepero(String filePath) {
+        storage = new Storage(filePath);
+        tasks = new TaskList(storage.load().getTasks());
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        try {
+            return Parser.parseAndReturn(input, tasks, storage);
+        } catch (PeperoException | IOException e) {
+            return e.getMessage();
+        }
     }
 }
