@@ -59,4 +59,23 @@ public class TaskList {
 
         return results;
     }
+
+    /**
+     * Returns the task at the specified index in the task list.
+     *
+     * @param index index of the task to retrieve
+     * @return the task at the specified index
+     */
+    public Task getTask(int index) {
+        return tasks.get(index);
+    }
+
+    /**
+     * Returns the size of the task list.
+     *
+     * @return number of tasks in the task list
+     */
+    public int getSize() {
+        return tasks.size();
+    }
 }
