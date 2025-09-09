@@ -27,6 +27,7 @@ public class Parser {
     public static void parse(String input, TaskList tasks, Ui ui, Storage storage) throws PeperoException, IOException {
         String[] parts = input.split(" ", 2);
         String command = parts[0];
+        assert(command != null);
 
 
         switch (command) {
@@ -43,6 +44,7 @@ public class Parser {
 
         case "mark": {
             int markIndex = Integer.parseInt(parts[1]);
+            assert(markIndex >= tasks.getTasks().size());
             Task task = tasks.getTasks().get(markIndex - 1);
             task.markDone();
             ui.printMark(task);
@@ -51,6 +53,7 @@ public class Parser {
 
         case "unmark": {
             int unmarkIndex = Integer.parseInt(parts[1]);
+            assert(unmarkIndex >= tasks.getTasks().size());
             Task task = tasks.getTasks().get(unmarkIndex - 1);
             task.unmarkDone();
             ui.printUnmark(task);
@@ -61,6 +64,7 @@ public class Parser {
             if (parts.length < 2) {
                 throw new PeperoException("description of todo empty :(");
             }
+            assert(parts[1] != null);
             ToDo task = new ToDo(parts[1]);
             tasks.addTask(task);
             ui.printAddTask(task);
@@ -73,6 +77,7 @@ public class Parser {
             }
             String deadlineParts = parts[1];
             String[] otherPart = deadlineParts.split("/by ", 2);
+            assert(otherPart.length == 2);
             String description = otherPart[0];
             String deadline = otherPart[1];
             Deadline task = new Deadline(description, LocalDateTime.parse(deadline, formatter));
@@ -87,6 +92,7 @@ public class Parser {
             }
             String eventParts = parts[1];
             String[] otherPart = eventParts.split("/", 3);
+            assert(otherPart.length == 3);
             String description = otherPart[0];
             String from = otherPart[1].split(" ", 2)[1];
             String to = otherPart[2].split(" ", 2)[1];
@@ -98,6 +104,7 @@ public class Parser {
 
         case "delete": {
             int deleteIndex = Integer.parseInt(parts[1]);
+            assert(deleteIndex >= tasks.getTasks().size());
             Task deletedTask = tasks.getTasks().get(deleteIndex - 1);
             ui.printDeleteTask(deletedTask);
             tasks.deleteTask(deleteIndex);
@@ -110,6 +117,7 @@ public class Parser {
                     throw new PeperoException("description of find empty :(");
                 }
                 String keyword = parts[1];
+                assert(keyword != null);
                 ui.printFindResults(tasks.findTasks(keyword));
                 break;
             }
@@ -140,6 +148,7 @@ public class Parser {
 
         case "mark": {
             int markIndex = Integer.parseInt(parts[1]);
+            assert(markIndex >= tasks.getTasks().size());
             Task task = tasks.getTasks().get(markIndex - 1);
             task.markDone();
             response.append("Nice! I've marked this task as done:\n").append(task);
@@ -148,6 +157,7 @@ public class Parser {
 
         case "unmark": {
             int unmarkIndex = Integer.parseInt(parts[1]);
+            assert(unmarkIndex >= tasks.getTasks().size());
             Task task = tasks.getTasks().get(unmarkIndex - 1);
             task.unmarkDone();
             response.append("OK, I've marked this task as not done yet:\n").append(task);
@@ -158,6 +168,7 @@ public class Parser {
             if (parts.length < 2) {
                 throw new PeperoException("description of todo empty :(");
             }
+            assert(parts[1] != null);
             ToDo task = new ToDo(parts[1]);
             tasks.addTask(task);
             response.append("Added task:\n").append(task).append("\n")
@@ -170,6 +181,7 @@ public class Parser {
                 throw new PeperoException("description of deadline empty :(");
             }
             String[] otherPart = parts[1].split("/by ", 2);
+            assert(otherPart.length == 2);
             String description = otherPart[0];
             String deadline = otherPart[1];
             Deadline task = new Deadline(description, LocalDateTime.parse(deadline, formatter));
@@ -184,6 +196,7 @@ public class Parser {
                 throw new PeperoException("description of event empty :(");
             }
             String[] otherPart = parts[1].split("/", 3);
+            assert(otherPart.length == 3);
             String description = otherPart[0];
             String from = otherPart[1].split(" ", 2)[1];
             String to = otherPart[2].split(" ", 2)[1];
@@ -196,6 +209,10 @@ public class Parser {
 
         case "delete": {
             int deleteIndex = Integer.parseInt(parts[1]);
+            if (deleteIndex > tasks.getTasks().size()) {
+                throw new PeperoException("task " + deleteIndex + " does not exist :(");
+            }
+            assert(deleteIndex >= tasks.getTasks().size());
             Task deletedTask = tasks.getTasks().get(deleteIndex - 1);
             tasks.deleteTask(deleteIndex);
             response.append("Noted. I've removed this task:\n").append(deletedTask).append("\n")
@@ -208,6 +225,7 @@ public class Parser {
                 throw new PeperoException("description of find empty :(");
             }
             String keyword = parts[1];
+            assert(keyword != null);
             ArrayList<Task> found = tasks.findTasks(keyword);
             response.append("Here are the matching tasks in your list:\n");
             for (int i = 0; i < found.size(); i++) {

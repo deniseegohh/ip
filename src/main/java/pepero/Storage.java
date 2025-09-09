@@ -26,6 +26,7 @@ public class Storage {
      * @param filePath the path of the file to load from and save to
      */
     public Storage(String filePath) {
+        assert(filePath != null);
         this.filePath = filePath;
     }
 
@@ -67,8 +68,10 @@ public class Storage {
      * @throws IOException if an error occurs while writing to the file
      */
     public void save(TaskList tasks) throws IOException {
+        assert(tasks != null);
         FileWriter fw = new FileWriter(filePath);
         for (Task task : tasks.getTasks()) {
+            assert(task != null);
             fw.write(task.toFileFormat() + System.lineSeparator());
         }
         fw.close();
@@ -81,25 +84,34 @@ public class Storage {
      * @return the Task object corresponding to the line, or null if the line is not a Task.
      */
     private Task parseTask(String line) {
+        assert(line != null);
+
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) {
             System.err.println("Invalid line format: " + line);
             return null;
         }
+
         String type = parts[0];
         boolean isDone = parts[1].equals("1");
         String description = parts[2];
+
+        assert(description != null);
 
         switch (type) {
             case "T":
                 return new ToDo(description, isDone);
 
             case "D":
+                assert(parts.length == 4);
                 return new Deadline(description, LocalDateTime.parse(parts[3], formatter), isDone);
 
             case "E":
-                String from = parts[3].split("-")[0];
-                String to = parts[3].split("-")[1];
+                assert(parts.length == 4);
+                String[] eventParts = parts[3].split("-");
+                assert(eventParts.length == 2);
+                String from = eventParts[0];
+                String to = eventParts[1];
                 return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter), isDone);
 
             default:
