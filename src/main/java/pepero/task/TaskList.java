@@ -35,6 +35,7 @@ public class TaskList {
      * @param index the 1-based index of the task to delete
      */
     public void deleteTask(int index) {;
+        assert(index >= 0 && index < tasks.size());
         tasks.remove(index - 1);
     }
 
@@ -48,6 +49,7 @@ public class TaskList {
     }
 
     public ArrayList<Task> findTasks(String keyword) {
+        assert(keyword != null);
         ArrayList<Task> results = new ArrayList<>();
         for (Task task : tasks) {
             if (task.getDescription().contains(keyword)) {
