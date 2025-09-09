@@ -47,8 +47,7 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "pepero"
-    archiveClassifier = null
+    archiveFileName = "pepero.jar"
 }
 
 run{
