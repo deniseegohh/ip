@@ -99,23 +99,23 @@ public class Storage {
         assert(description != null);
 
         switch (type) {
-            case "T":
-                return new ToDo(description, isDone);
+        case "T":
+            return new ToDo(description, isDone);
 
-            case "D":
-                assert(parts.length == 4);
-                return new Deadline(description, LocalDateTime.parse(parts[3], formatter), isDone);
+        case "D":
+            assert (parts.length == 4);
+            return new Deadline(description, LocalDateTime.parse(parts[3], formatter), isDone);
 
-            case "E":
-                assert(parts.length == 4);
-                String[] eventParts = parts[3].split("-");
-                assert(eventParts.length == 2);
-                String from = eventParts[0];
-                String to = eventParts[1];
-                return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter), isDone);
+        case "E":
+            assert (parts.length == 4);
+            String[] eventParts = parts[3].split("-");
+            assert (eventParts.length == 2);
+            String from = eventParts[0];
+            String to = eventParts[1];
+            return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter), isDone);
 
-            default:
-                return null;
+        default:
+            return null;
 
         }
     }

@@ -31,11 +31,11 @@ public class Pepero {
                 ui.printLine();
 
                 if (input.equals("bye")) {
-                    Parser.parse(input, tasks, ui, storage);
+                    Parser.parseAndReturn(input, tasks, storage);
                     break;
                 }
 
-                Parser.parse(input, tasks, ui, storage);
+                Parser.parseAndReturn(input, tasks, storage);
 
             } catch (PeperoException e) {
                 System.out.println(" " + e.getMessage());
