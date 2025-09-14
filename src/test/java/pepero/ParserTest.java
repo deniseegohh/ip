@@ -14,7 +14,7 @@ public class ParserTest {
         Storage storage = new Storage("data/pepero.txt");
 
         assertThrows(PeperoException.class, () -> {
-            Parser.parse("abracadabra", tasks, ui, storage);
+            Parser.parseAndReturn("abracadabra", tasks, storage, ui);
         });
     }
 }

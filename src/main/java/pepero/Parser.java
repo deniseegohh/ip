@@ -15,22 +15,19 @@ public class Parser {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
-    public static String parseAndReturn(String input, TaskList tasks, Storage storage) throws PeperoException, IOException {
-        StringBuilder response = new StringBuilder();
+    public static String parseAndReturn(String input, TaskList tasks, Storage storage, Ui ui) throws PeperoException, IOException {
+        String response = "";
         String[] parts = input.split(" ", 2);
         String command = parts[0];
 
         switch (command) {
         case "bye":
             storage.save(tasks);
-            response.append("Bye bye!~ Hope to see you again soon~");
+            response = ui.printExit();
             break;
 
         case "list":
-            response.append("Here are the tasks in your list:\n");
-            for (int i = 0; i < tasks.getSize(); i++) {
-                response.append((i + 1)).append(". ").append(tasks.getTask(i)).append("\n");
-            }
+            response = ui.printTaskList(tasks);
             break;
 
         case "mark": {
@@ -39,7 +36,7 @@ public class Parser {
             Task task = tasks.getTask(markIndex - 1);
 
             task.markDone();
-            response.append("Nice! I've marked this task as done:\n").append(task);
+            response = ui.printMark(task);
             break;
         }
 
@@ -50,7 +47,7 @@ public class Parser {
 
             task.unmarkDone();
 
-            response.append("OK, I've marked this task as not done yet:\n").append(task);
+            response = ui.printUnmark(task);
             break;
         }
 
@@ -65,8 +62,7 @@ public class Parser {
 
             tasks.addTask(task);
 
-            response = printAddedTask(response, tasks, task);
-            response = printNumberOfTasks(response, tasks);
+            response = ui.printAddTask(task);
             break;
         }
 
@@ -83,8 +79,7 @@ public class Parser {
             Deadline task = new Deadline(description, LocalDateTime.parse(deadline, formatter));
             tasks.addTask(task);
 
-            response = printAddedTask(response, tasks, task);
-            response = printNumberOfTasks(response, tasks);
+            response = ui.printAddTask(task);
             break;
         }
 
@@ -102,8 +97,7 @@ public class Parser {
             Event task = new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
             tasks.addTask(task);
 
-            response = printAddedTask(response, tasks, task);
-            response = printNumberOfTasks(response, tasks);
+            response = ui.printAddTask(task);
             break;
         }
 
@@ -117,8 +111,7 @@ public class Parser {
             Task deletedTask = tasks.getTask(deleteIndex - 1);
             tasks.deleteTask(deleteIndex);
 
-            response.append("Noted. I've removed this task:\n").append(deletedTask).append("\n");
-            response = printNumberOfTasks(response, tasks);
+            response = ui.printDeleteTask(deletedTask) + "\n\n" + ui.printTaskList(tasks);
             break;
         }
 
@@ -130,12 +123,9 @@ public class Parser {
             String keyword = parts[1];
             assert(keyword != null);
 
-            ArrayList<Task> found = tasks.findTasks(keyword);
+            ArrayList<Task> foundTasks = tasks.findTasks(keyword);
 
-            response.append("Here are the matching tasks in your list:\n");
-            for (int i = 0; i < found.size(); i++) {
-                response.append((i + 1)).append(". ").append(found.get(i)).append("\n");
-            }
+            response = ui.printFindResults(foundTasks);
             break;
         }
 
@@ -143,30 +133,7 @@ public class Parser {
             throw new PeperoException("I'm sorry I don't quite understand :(");
         }
 
-        return response.toString().trim();
-    }
-
-    /**
-     * Prints a message indicating the number of tasks in the list.
-     *
-     * @param response the StringBuilder to append the message to
-     * @param tasks the TaskList which size is displayed
-     * @return the updated StringBuilder containing the message
-     */
-    private static StringBuilder printNumberOfTasks(StringBuilder response, TaskList tasks) {
-        return response.append("Now you have ").append(tasks.getSize()).append(" tasks in the list.");
-    }
-
-    /**
-     * Prints a message indicating that a task has been added to the list
-     *
-     * @param response the StringBuilder to append the message to
-     * @param tasks the TaskList to which the task was added
-     * @param task the Task that was added
-     * @return the updated StringBuilder containing the message
-     */
-    private static StringBuilder printAddedTask(StringBuilder response, TaskList tasks, Task task) {
-        return response.append("Added task:\n").append(task).append("\n");
+        return response;
     }
 
 }
