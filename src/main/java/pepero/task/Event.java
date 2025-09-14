@@ -49,9 +49,9 @@ public class Event extends Task {
     @Override
     public String getStatusIcon() {
         if (isDone) {
-            return("[E][X]");
+            return "[E][X]";
         } else {
-            return("[E][ ]");
+            return "[E][ ]";
         }
     }
 

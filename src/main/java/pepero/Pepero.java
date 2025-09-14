@@ -8,9 +8,9 @@ import java.io.IOException;
  * The main class for the Pepero application.
  */
 public class Pepero {
-    private Storage storage;
-    private TaskList tasks;
-    private Ui ui;
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
 
     public Pepero(String filePath) {
         storage = new Storage(filePath);
@@ -25,8 +25,7 @@ public class Pepero {
         try {
             return Parser.parseAndReturn(input, tasks, storage, ui);
         } catch (PeperoException | IOException e) {
-            e.printStackTrace();
-            return "Something went wrong: " + e.getMessage();
+            return e.getMessage();
         }
     }
 }

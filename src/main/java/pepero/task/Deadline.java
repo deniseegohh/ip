@@ -44,9 +44,9 @@ public class Deadline extends Task {
     @Override
     public String getStatusIcon() {
         if (isDone) {
-            return("[D][X]");
+            return "[D][X]";
         } else {
-            return("[D][ ]");
+            return "[D][ ]";
         }
     }
 

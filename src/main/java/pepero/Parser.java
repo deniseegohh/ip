@@ -36,7 +36,7 @@ public class Parser {
             Task task = tasks.getTask(markIndex - 1);
 
             task.markDone();
-            response = ui.printMark(task);
+            response = ui.printMarkedTask(task);
             break;
         }
 
@@ -47,7 +47,7 @@ public class Parser {
 
             task.unmarkDone();
 
-            response = ui.printUnmark(task);
+            response = ui.printUnmarkedTask(task);
             break;
         }
 
@@ -62,7 +62,7 @@ public class Parser {
 
             tasks.addTask(task);
 
-            response = ui.printAddTask(task) + "\n\n" + ui.printTaskCount(tasks);
+            response = ui.printAddedTask(task) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 
@@ -70,7 +70,7 @@ public class Parser {
             Deadline task = getDeadline(parts);
             tasks.addTask(task);
 
-            response = ui.printAddTask(task) + "\n\n" + ui.printTaskCount(tasks);
+            response = ui.printAddedTask(task) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 
@@ -78,7 +78,7 @@ public class Parser {
             Event task = getEvent(parts);
             tasks.addTask(task);
 
-            response = ui.printAddTask(task) + "\n\n" + ui.printTaskCount(tasks);
+            response = ui.printAddedTask(task) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 
@@ -92,7 +92,7 @@ public class Parser {
             Task deletedTask = tasks.getTask(deleteIndex - 1);
             tasks.deleteTask(deleteIndex);
 
-            response = ui.printDeleteTask(deletedTask) + "\n\n" + ui.printTaskCount(tasks);
+            response = ui.printDeletedTask(deletedTask) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 

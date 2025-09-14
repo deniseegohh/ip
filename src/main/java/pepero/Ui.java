@@ -45,7 +45,7 @@ public class Ui {
      * @param task the task object that has been marked as completed
      * @return a string representing message indicating given task has been marked as done
      */
-    public String printMark(Task task) {
+    public String printMarkedTask(Task task) {
         return "Nice! I've marked this task as done: \n"
                 + task.getStatusIcon() + " " + task.getDescription() + "\n";
     }
@@ -56,7 +56,7 @@ public class Ui {
      * @param task the task object that has been marked as incomplete
      * @return a string representing message indicating that the given task has been marked as undone
      */
-    public String printUnmark(Task task) {
+    public String printUnmarkedTask(Task task) {
         return "Okay, I've marked this task as not done yet: \n"
                 + task.getStatusIcon() + " " + task.getDescription() + "\n";
     }
@@ -67,7 +67,7 @@ public class Ui {
      * @param task the task object that has been added
      * @return a string representing message indicating that the given task has been added to the tasklist
      */
-    public String printAddTask(Task task) {
+    public String printAddedTask(Task task) {
         return "added: " + task;
     }
 
@@ -77,7 +77,7 @@ public class Ui {
      * @param task the task object that has been deleted
      * @return a string representing message that given task has been deleted
      */
-    public String printDeleteTask(Task task) {
+    public String printDeletedTask(Task task) {
         return "I will remove this task: " + task;
     }
 
