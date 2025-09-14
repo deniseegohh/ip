@@ -4,7 +4,6 @@ import pepero.task.Task;
 import pepero.task.TaskList;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Handles printing messages to the console.
@@ -15,15 +14,6 @@ public class Ui {
      * Constructs a new Ui object.
      */
     public Ui() {
-    }
-
-    /**
-     * Prints welcome message when the program first starts.
-     *
-     * @return a string representing welcome message
-     */
-    public String printWelcome() {
-        return "Hello! I'm Pepero.Pepero! \n What can I do for you?";
     }
 
     /**

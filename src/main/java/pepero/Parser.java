@@ -16,7 +16,7 @@ public class Parser {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
     public static String parseAndReturn(String input, TaskList tasks, Storage storage, Ui ui) throws PeperoException, IOException {
-        String response = "";
+        String response;
         String[] parts = input.split(" ", 2);
         String command = parts[0];
 
@@ -62,42 +62,23 @@ public class Parser {
 
             tasks.addTask(task);
 
-            response = ui.printAddTask(task);
+            response = ui.printAddTask(task) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 
         case "deadline": {
-            if (parts.length < 2) {
-                throw new PeperoException("description of deadline empty :(");
-            }
-
-            String[] deadlineParts = parts[1].split("/by ", 2);
-            assert(deadlineParts.length == 2);
-            String description = deadlineParts[0];
-            String deadline = deadlineParts[1];
-
-            Deadline task = new Deadline(description, LocalDateTime.parse(deadline, formatter));
+            Deadline task = getDeadline(parts);
             tasks.addTask(task);
 
-            response = ui.printAddTask(task);
+            response = ui.printAddTask(task) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 
         case "event": {
-            if (parts.length < 2) {
-                throw new PeperoException("description of event empty :(");
-            }
-
-            String[] eventParts = parts[1].split("/", 3);
-            assert(eventParts.length == 3);
-            String description = eventParts[0];
-            String from = eventParts[1].split(" ", 2)[1];
-            String to = eventParts[2].split(" ", 2)[1];
-
-            Event task = new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
+            Event task = getEvent(parts);
             tasks.addTask(task);
 
-            response = ui.printAddTask(task);
+            response = ui.printAddTask(task) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 
@@ -111,7 +92,7 @@ public class Parser {
             Task deletedTask = tasks.getTask(deleteIndex - 1);
             tasks.deleteTask(deleteIndex);
 
-            response = ui.printDeleteTask(deletedTask) + "\n\n" + ui.printTaskList(tasks);
+            response = ui.printDeleteTask(deletedTask) + "\n\n" + ui.printTaskCount(tasks);
             break;
         }
 
@@ -134,6 +115,33 @@ public class Parser {
         }
 
         return response;
+    }
+
+    private static Deadline getDeadline(String[] parts) throws PeperoException {
+        if (parts.length < 2) {
+            throw new PeperoException("description of deadline empty :(");
+        }
+
+        String[] deadlineParts = parts[1].split("/by ", 2);
+        assert(deadlineParts.length == 2);
+        String description = deadlineParts[0];
+        String deadline = deadlineParts[1];
+
+        return new Deadline(description, LocalDateTime.parse(deadline, formatter));
+    }
+
+    private static Event getEvent(String[] parts) throws PeperoException {
+        if (parts.length < 2) {
+            throw new PeperoException("description of event empty :(");
+        }
+
+        String[] eventParts = parts[1].split("/", 3);
+        assert(eventParts.length == 3);
+        String description = eventParts[0];
+        String from = eventParts[1].split(" ", 2)[1];
+        String to = eventParts[2].split(" ", 2)[1];
+
+        return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
     }
 
 }
