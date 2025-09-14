@@ -35,9 +35,9 @@ public class ToDo extends Task {
     @Override
     public String getStatusIcon() {
         if (isDone) {
-            return("[T][X]");
+            return "[T][X]";
         } else {
-            return("[T][ ]");
+            return "[T][ ]";
         }
     }
 

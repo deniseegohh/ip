@@ -24,7 +24,9 @@ public class Task {
      *
      * @return the total task count
      */
-    public int getTaskCount() {return taskCount;}
+    public int getTaskCount() {
+        return taskCount;
+    }
 
     /**
      * Returns the description of the task.
@@ -57,9 +59,9 @@ public class Task {
      */
     public String getStatusIcon() {
         if (isDone) {
-            return("[X]");
+            return "[X]";
         } else {
-            return("[ ]");
+            return "[ ]";
         }
     }
 
@@ -77,5 +79,7 @@ public class Task {
      *
      * @return a string in the file storage format
      */
-    public String toFileFormat() {return "";}
+    public String toFileFormat() {
+        return "";
+    }
 }

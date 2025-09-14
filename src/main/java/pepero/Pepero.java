@@ -8,57 +8,14 @@ import java.io.IOException;
  * The main class for the Pepero application.
  */
 public class Pepero {
-    private Storage storage;
-    private TaskList tasks;
-    private Ui ui;
-
-    /**
-     * The entry point of the Pepero application.
-     *
-     * @param args command-line arguments
-     */
-    public static void main(String[] args) {
-        Ui ui = new Ui();
-        Storage storage = new Storage("./data/pepero.txt");
-        TaskList tasks = storage.load();
-        ui.printWelcome();
-        ui.printTaskList(tasks);
-
-        label:
-        while (true) {
-            try {
-                String input = ui.readInput();
-                ui.printLine();
-
-                if (input.equals("bye")) {
-                    Parser.parse(input, tasks, ui, storage);
-                    break;
-                }
-
-                Parser.parse(input, tasks, ui, storage);
-
-            } catch (PeperoException e) {
-                System.out.println(" " + e.getMessage());
-                System.out.println("____________________________________________________________");
-            } catch (NumberFormatException e) {
-                System.out.println(" OOPS!!! Pepero.Task number must be an integer.");
-                System.out.println("____________________________________________________________");
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println(" OOPS!!! Pepero.Task number out of range.");
-                System.out.println("____________________________________________________________");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
-
-        ui.exit();
-    }
+    private final Storage storage;
+    private final TaskList tasks;
+    private final Ui ui;
 
     public Pepero(String filePath) {
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load().getTasks());
+        ui = new Ui();
     }
 
     /**
@@ -66,7 +23,7 @@ public class Pepero {
      */
     public String getResponse(String input) {
         try {
-            return Parser.parseAndReturn(input, tasks, storage);
+            return Parser.parseAndReturn(input, tasks, storage, ui);
         } catch (PeperoException | IOException e) {
             return e.getMessage();
         }
