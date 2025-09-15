@@ -5,7 +5,7 @@ package pepero.task;
  */
 public class Task {
 
-    protected final String description;
+    protected String description;
     protected boolean isDone;
     protected static int taskCount = 0;
 
@@ -63,6 +63,10 @@ public class Task {
         } else {
             return "[ ]";
         }
+    }
+
+    public void updateTask(String details) {
+        this.description = details.trim();
     }
 
     /**

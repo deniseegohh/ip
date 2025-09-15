@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
 
     protected LocalDateTime by;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
     /**
      * Constructs a new task with the given description and deadline.
@@ -47,6 +48,19 @@ public class Deadline extends Task {
             return "[D][X]";
         } else {
             return "[D][ ]";
+        }
+    }
+
+    @Override
+    public void updateTask(String details) {
+        String[] parts = details.split(" (?=/)");
+
+        for (String part : parts) {
+            if (part.startsWith("/by")) {
+                this.by = LocalDateTime.parse(part.substring(3).trim(), formatter);
+            } else if (!part.isBlank()) {
+                this.description = part.trim();
+            }
         }
     }
 
