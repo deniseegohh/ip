@@ -10,6 +10,7 @@ public class Event extends Task {
 
     protected LocalDateTime from;
     protected LocalDateTime to;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy HHmm");
 
     /**
      * Constructs a new task with the given description, start time and end time.
@@ -52,6 +53,21 @@ public class Event extends Task {
             return "[E][X]";
         } else {
             return "[E][ ]";
+        }
+    }
+
+    @Override
+    public void updateTask(String details) {
+        String[] parts = details.split(" (?=/)");
+
+        for (String part : parts) {
+            if (part.startsWith("/from")) {
+                this.from = LocalDateTime.parse(part.substring(5).trim(), formatter);
+            } else if (part.startsWith("/to")) {
+                this.to = LocalDateTime.parse(part.substring(3).trim(), formatter);
+            } else if (!part.isBlank()) {
+                this.description = part.trim();
+            }
         }
     }
 

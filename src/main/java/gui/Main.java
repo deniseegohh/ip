@@ -27,7 +27,7 @@ public class Main extends Application {
             fxmlLoader.<MainWindow>getController().setPepero(pepero);  // inject the Pepero instance
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
         }
     }
 }

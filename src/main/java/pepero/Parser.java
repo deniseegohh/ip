@@ -110,6 +110,19 @@ public class Parser {
             break;
         }
 
+        case "update": {
+            if (parts.length < 2) {
+                throw new PeperoException("description of update empty :(");
+            }
+            String[] updateParts = parts[1].split(" ", 2);
+            int updateIndex = Integer.parseInt(updateParts[0]);
+            String updateDetails = updateParts[1];
+            Task task = tasks.getTask(updateIndex - 1);
+            task.updateTask(updateDetails);
+            response = ui.printUpdatedTask(task);
+            break;
+        }
+
         default:
             throw new PeperoException("I'm sorry I don't quite understand :(");
         }
@@ -134,12 +147,12 @@ public class Parser {
         if (parts.length < 2) {
             throw new PeperoException("description of event empty :(");
         }
-
-        String[] eventParts = parts[1].split("/", 3);
+        String pattern = " /from | /to ";
+        String[] eventParts = parts[1].split(pattern);
         assert(eventParts.length == 3);
-        String description = eventParts[0];
-        String from = eventParts[1].split(" ", 2)[1];
-        String to = eventParts[2].split(" ", 2)[1];
+        String description = eventParts[0].trim();
+        String from = eventParts[1].trim();
+        String to = eventParts[2].trim();
 
         return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
     }

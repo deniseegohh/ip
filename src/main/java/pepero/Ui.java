@@ -105,4 +105,8 @@ public class Ui {
         return sb.toString();
     }
 
+    public String printUpdatedTask(Task task) {
+        return "Great! I've updated this task:\n" + task;
+    }
+
 }
