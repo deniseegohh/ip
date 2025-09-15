@@ -7,7 +7,6 @@ public class Task {
 
     protected String description;
     protected boolean isDone;
-    protected static int taskCount = 0;
 
     /**
      * Constructs a new Task with the given description.
@@ -17,15 +16,6 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
-    }
-
-    /**
-     * Returns the total number of active tasks.
-     *
-     * @return the total task count
-     */
-    public int getTaskCount() {
-        return taskCount;
     }
 
     /**
