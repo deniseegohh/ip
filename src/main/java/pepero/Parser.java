@@ -31,9 +31,12 @@ public class Parser {
             break;
 
         case "mark": {
-            int markIndex = Integer.parseInt(parts[1]);
-            assert(markIndex >= tasks.getSize());
-            Task task = tasks.getTask(markIndex - 1);
+            if (parts.length < 2) {
+                throw new PeperoException("Please specify a task number to mark :(");
+            }
+
+            int markIndex = parseAndValidateIndex(parts[1], tasks.getSize(), "mark");
+            Task task = tasks.getTask(markIndex);
 
             task.markDone();
             response = ui.printMarkedTask(task);
@@ -41,8 +44,11 @@ public class Parser {
         }
 
         case "unmark": {
-            int unmarkIndex = Integer.parseInt(parts[1]);
-            assert(unmarkIndex >= tasks.getSize());
+            if (parts.length < 2) {
+                throw new PeperoException("Please specify a task number to unmark :(");
+            }
+
+            int unmarkIndex = parseAndValidateIndex(parts[1], tasks.getSize(), "unmark");
             Task task = tasks.getTask(unmarkIndex - 1);
 
             task.unmarkDone();
@@ -83,10 +89,11 @@ public class Parser {
         }
 
         case "delete": {
-            int deleteIndex = Integer.parseInt(parts[1]);
-            if (deleteIndex > tasks.getSize()) {
-                throw new PeperoException("task " + deleteIndex + " does not exist :(");
+            if (parts.length < 2) {
+                throw new PeperoException("Please specify a task number to delete :(");
             }
+
+            int deleteIndex = parseAndValidateIndex(parts[1], tasks.getSize(), "delete");
             assert(deleteIndex >= tasks.getSize());
 
             Task deletedTask = tasks.getTask(deleteIndex - 1);
@@ -114,9 +121,15 @@ public class Parser {
             if (parts.length < 2) {
                 throw new PeperoException("description of update empty :(");
             }
+
             String[] updateParts = parts[1].split(" ", 2);
-            int updateIndex = Integer.parseInt(updateParts[0]);
-            String updateDetails = updateParts[1];
+            if (updateParts.length < 2) {
+                throw new PeperoException("Please specify the new details to update :(");
+            }
+
+            int updateIndex = parseAndValidateIndex(updateParts[0], tasks.getSize(), "update");
+            String updateDetails = updateParts[1].trim();
+
             Task task = tasks.getTask(updateIndex - 1);
             task.updateTask(updateDetails);
             response = ui.printUpdatedTask(task);
@@ -156,5 +169,22 @@ public class Parser {
 
         return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
     }
+
+    private static int parseAndValidateIndex(String part, int size, String action) throws PeperoException {
+        if (part == null || part.isEmpty()) {
+            throw new PeperoException("Please specify a task number to " + action + " :(");
+        }
+        int index;
+        try {
+            index = Integer.parseInt(part);
+        } catch (NumberFormatException e) {
+            throw new PeperoException("Invalid task number format :(");
+        }
+        if (index < 1 || index > size) {
+            throw new PeperoException("task " + index + " does not exist :(");
+        }
+        return index - 1;
+    }
+
 
 }
