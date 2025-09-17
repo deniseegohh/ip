@@ -31,9 +31,10 @@ public class Parser {
             break;
 
         case "mark": {
-            int markIndex = Integer.parseInt(parts[1]);
-            assert(markIndex >= tasks.getSize());
-            Task task = tasks.getTask(markIndex - 1);
+            ensureHasArgument(parts, "Please specify a task number to mark :(");
+
+            int markIndex = parseAndValidateIndex(parts[1], tasks.getSize(), "mark");
+            Task task = tasks.getTask(markIndex);
 
             task.markDone();
             response = ui.printMarkedTask(task);
@@ -41,9 +42,10 @@ public class Parser {
         }
 
         case "unmark": {
-            int unmarkIndex = Integer.parseInt(parts[1]);
-            assert(unmarkIndex >= tasks.getSize());
-            Task task = tasks.getTask(unmarkIndex - 1);
+            ensureHasArgument(parts, "Please specify a task number to unmark :(");
+
+            int unmarkIndex = parseAndValidateIndex(parts[1], tasks.getSize(), "unmark");
+            Task task = tasks.getTask(unmarkIndex);
 
             task.unmarkDone();
 
@@ -52,11 +54,7 @@ public class Parser {
         }
 
         case "todo": {
-            if (parts.length < 2) {
-                throw new PeperoException("description of todo empty :(");
-            }
-
-            assert(parts[1] != null);
+            ensureHasArgument(parts, "description of todo empty :(");
 
             ToDo task = new ToDo(parts[1]);
 
@@ -83,13 +81,11 @@ public class Parser {
         }
 
         case "delete": {
-            int deleteIndex = Integer.parseInt(parts[1]);
-            if (deleteIndex > tasks.getSize()) {
-                throw new PeperoException("task " + deleteIndex + " does not exist :(");
-            }
-            assert(deleteIndex >= tasks.getSize());
+            ensureHasArgument(parts, "Please specify a task number to delete :(");
 
-            Task deletedTask = tasks.getTask(deleteIndex - 1);
+            int deleteIndex = parseAndValidateIndex(parts[1], tasks.getSize(), "delete");
+
+            Task deletedTask = tasks.getTask(deleteIndex);
             tasks.deleteTask(deleteIndex);
 
             response = ui.printDeletedTask(deletedTask) + "\n\n" + ui.printTaskCount(tasks);
@@ -97,9 +93,7 @@ public class Parser {
         }
 
         case "find": {
-            if (parts.length < 2) {
-                throw new PeperoException("description of find empty :(");
-            }
+            ensureHasArgument(parts, "description of find empty :(");
 
             String keyword = parts[1];
             assert(keyword != null);
@@ -111,13 +105,15 @@ public class Parser {
         }
 
         case "update": {
-            if (parts.length < 2) {
-                throw new PeperoException("description of update empty :(");
-            }
+            ensureHasArgument(parts, "description of update empty :(");
+
             String[] updateParts = parts[1].split(" ", 2);
-            int updateIndex = Integer.parseInt(updateParts[0]);
-            String updateDetails = updateParts[1];
-            Task task = tasks.getTask(updateIndex - 1);
+            ensureHasArgument(updateParts, "Please specify the new details to update :(");
+
+            int updateIndex = parseAndValidateIndex(updateParts[0], tasks.getSize(), "update");
+            String updateDetails = updateParts[1].trim();
+
+            Task task = tasks.getTask(updateIndex);
             task.updateTask(updateDetails);
             response = ui.printUpdatedTask(task);
             break;
@@ -131,9 +127,7 @@ public class Parser {
     }
 
     private static Deadline getDeadline(String[] parts) throws PeperoException {
-        if (parts.length < 2) {
-            throw new PeperoException("description of deadline empty :(");
-        }
+        ensureHasArgument(parts, "description of deadline empty :(");
 
         String[] deadlineParts = parts[1].split("/by ", 2);
         assert(deadlineParts.length == 2);
@@ -144,9 +138,7 @@ public class Parser {
     }
 
     private static Event getEvent(String[] parts) throws PeperoException {
-        if (parts.length < 2) {
-            throw new PeperoException("description of event empty :(");
-        }
+        ensureHasArgument(parts, "description of event empty :(");
         String pattern = " /from | /to ";
         String[] eventParts = parts[1].split(pattern);
         assert(eventParts.length == 3);
@@ -156,5 +148,28 @@ public class Parser {
 
         return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
     }
+
+    private static int parseAndValidateIndex(String part, int size, String action) throws PeperoException {
+        if (part == null || part.isEmpty()) {
+            throw new PeperoException("Please specify a task number to " + action + " :(");
+        }
+        int index;
+        try {
+            index = Integer.parseInt(part);
+        } catch (NumberFormatException e) {
+            throw new PeperoException("Invalid task number format :(");
+        }
+        if (index < 1 || index > size) {
+            throw new PeperoException("task " + index + " does not exist :(");
+        }
+        return index - 1;
+    }
+
+    private static void ensureHasArgument(String[] parts, String errorMsg) throws PeperoException {
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new PeperoException(errorMsg);
+        }
+    }
+
 
 }
