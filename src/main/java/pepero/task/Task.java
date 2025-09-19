@@ -1,5 +1,7 @@
 package pepero.task;
 
+import pepero.PeperoException;
+
 /**
  * Represents a generic task with a description and a completion status.
  */
@@ -59,7 +61,7 @@ public class Task {
         }
     }
 
-    public void updateTask(String details) {
+    public void updateTask(String details) throws PeperoException {
         this.description = details.trim();
     }
 

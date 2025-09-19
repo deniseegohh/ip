@@ -3,6 +3,8 @@ package pepero.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import pepero.PeperoException;
+
 /**
  * Represents a task that occurs over a period of time.
  */
@@ -56,14 +58,24 @@ public class Event extends Task {
     }
 
     @Override
-    public void updateTask(String details) {
+    public void updateTask(String details) throws PeperoException {
         String[] parts = details.split(" (?=/)");
 
         for (String part : parts) {
             if (part.startsWith("/from")) {
-                this.from = LocalDateTime.parse(part.substring(5).trim(), formatter);
+                String from = part.substring(5).trim();
+                try {
+                    this.from = LocalDateTime.parse(from, formatter);
+                } catch (Exception e) {
+                    throw new PeperoException("☹ Please enter a valid date/time for /from in format ddMMyy HHmm.");
+                }
             } else if (part.startsWith("/to")) {
-                this.to = LocalDateTime.parse(part.substring(3).trim(), formatter);
+                String to = part.substring(3).trim();
+                try {
+                    this.to = LocalDateTime.parse(to, formatter);
+                } catch (Exception e) {
+                    throw new PeperoException("☹ Please enter a valid date/time for /to in format ddMMyy HHmm.");
+                }
             } else if (!part.isBlank()) {
                 this.description = part.trim();
             }

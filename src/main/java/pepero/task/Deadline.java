@@ -3,6 +3,8 @@ package pepero.task;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import pepero.PeperoException;
+
 /**
  * Represents a task with a specific deadline.
  */
@@ -51,12 +53,17 @@ public class Deadline extends Task {
     }
 
     @Override
-    public void updateTask(String details) {
+    public void updateTask(String details) throws PeperoException {
         String[] parts = details.split(" (?=/)");
 
         for (String part : parts) {
             if (part.startsWith("/by")) {
-                this.by = LocalDateTime.parse(part.substring(3).trim(), formatter);
+                String dateAndTime = part.substring(3).trim();
+                try {
+                    this.by = LocalDateTime.parse(dateAndTime, formatter);
+                } catch (Exception e) {
+                    throw new PeperoException("Please enter a valid date/time for /by in format ddMMyy HHmm.");
+                }
             } else if (!part.isBlank()) {
                 this.description = part.trim();
             }
