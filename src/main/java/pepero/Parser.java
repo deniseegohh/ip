@@ -128,25 +128,42 @@ public class Parser {
 
     private static Deadline getDeadline(String[] parts) throws PeperoException {
         ensureHasArgument(parts, "description of deadline empty :(");
+        ensureContains(parts[1], "/by");
 
         String[] deadlineParts = parts[1].split("/by ", 2);
-        assert(deadlineParts.length == 2);
+        if (deadlineParts.length < 2 || deadlineParts[1].trim().isEmpty()) {
+            throw new PeperoException("☹ Deadline must have a valid /by date.");
+        }
+
         String description = deadlineParts[0];
         String deadline = deadlineParts[1];
 
-        return new Deadline(description, LocalDateTime.parse(deadline, formatter));
+        try {
+            return new Deadline(description, LocalDateTime.parse(deadline, formatter));
+        } catch (Exception e) {
+            throw new PeperoException("☹ Please enter valid date/time in format ddMMyy HHmm.");
+        }
     }
 
     private static Event getEvent(String[] parts) throws PeperoException {
         ensureHasArgument(parts, "description of event empty :(");
+        ensureContains(parts[1], "/from", "/to");
+
         String pattern = " /from | /to ";
         String[] eventParts = parts[1].split(pattern);
-        assert(eventParts.length == 3);
+        if (eventParts.length < 3 || eventParts[1].trim().isEmpty() || eventParts[2].trim().isEmpty()) {
+            throw new PeperoException("☹ Event must include both /from and /to times.");
+        }
+
         String description = eventParts[0].trim();
         String from = eventParts[1].trim();
         String to = eventParts[2].trim();
 
-        return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
+        try {
+            return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
+        } catch (Exception e) {
+            throw new PeperoException("☹ Please enter valid date/time in format ddMMyy HHmm.");
+        }
     }
 
     private static int parseAndValidateIndex(String part, int size, String action) throws PeperoException {
@@ -168,6 +185,14 @@ public class Parser {
     private static void ensureHasArgument(String[] parts, String errorMsg) throws PeperoException {
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
             throw new PeperoException(errorMsg);
+        }
+    }
+
+    private static void ensureContains(String input, String... keywords) throws PeperoException {
+        for (String keyword : keywords) {
+            if (!input.contains(keyword)) {
+                throw new PeperoException("☹ OOPS!!! This command must include " + String.join(" and ", keywords) + ".");
+            }
         }
     }
 
