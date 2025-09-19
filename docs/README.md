@@ -1,6 +1,6 @@
 ## Pepero User Guide ❤️
 
-![Screenshot of Pepero](/docs/Ui.png)
+![Screenshot of Pepero](Ui.png)
 
 Pepero is **YOUR** friendly task manager that will help you to keep track of <ins>all</ins> your tasks! :)
 
