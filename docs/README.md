@@ -92,7 +92,7 @@ Here are the matching tasks in your list:
 
 ## Updating tasks
 Update the description and/or date/time of a task by its index in the list. \
-Usage: `update <task_index> [<new_description>] [/by <new_ddMMyy HHmm>] [/from <new_ddMMyy HHmm> /to <new_ddMMyy HHmm>]` \
+Usage: `update <task_index> [<new_description>] [/by <new_ddMMyy HHmm>] [/from <new_ddMMyy HHmm>] [/to <new_ddMMyy HHmm>]` \
 Example: `update 2 project meeting /to 201125 1700` \
 Expected outcome:
 ```
