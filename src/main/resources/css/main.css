@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'Patrick Hand';
+    src: url('/fonts/PatrickHand-Regular.ttf');
+}
+
+/* Root background: warm Pepero packaging vibe */
+.root {
+    -fx-background-color: linear-gradient(to bottom right, #10793f, #5e9775);
+}
+
+/* Text field: creamy background like almond filling */
+.text-field {
+    -fx-background-color: #FFF4E1;
+    -fx-font-family: 'Patrick Hand', sans-serif;
+    -fx-font-size: 16px;
+    -fx-text-fill: #6b3021;  /* chocolate text */
+    -fx-background-radius: 0.8em;
+    -fx-border-radius: 0.8em;
+    -fx-border-color: #F5A623;
+    -fx-border-width: 1.5px;
+}
+
+/* Buttons: almond chocolate colors */
+.button {
+    -fx-background-color: #FFD8A8;
+    -fx-font-family: 'Patrick Hand', sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #6b3021;
+    -fx-background-radius: 1em;
+    -fx-border-radius: 1em;
+    -fx-border-color: #E9967A;
+    -fx-border-width: 2px;
+}
+
+.button:hover {
+    -fx-background-color: #FFB347; /* brighter almond */
+    -fx-font-size: 18px;
+}
+
+.button:pressed {
+    -fx-background-color: #D2691E; /* chocolate pressed effect */
+    -fx-font-size: 20px;
+}
+
+/* Scroll pane: subtle chocolate theme */
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;
+    -fx-background-color: #E9967A;
+}
+
+.scroll-bar .thumb {
+    -fx-background-image: url("/images/pepero_stick.jpg");
+    -fx-background-repeat: repeat-y;        /* repeat vertically */
+    -fx-background-size: 100% auto;         /* full width of thumb, height automatic */
+    -fx-background-position: center center; /* center horizontally */
+    -fx-background-radius: 1em;
+}
+
+
+/* Hide increment/decrement buttons */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}

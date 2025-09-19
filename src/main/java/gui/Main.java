@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -20,6 +22,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            stage.setTitle("Your sweet chatbot Pepero!");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/pepero_icon.png")));
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);

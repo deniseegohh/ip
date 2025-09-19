@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'Patrick Hand';
+    src: url('/fonts/PatrickHand-Regular.ttf');
+}
+
+/* Chat bubble for incoming messages */
+.label {
+    -fx-background-color: linear-gradient(to bottom right, #6b3021, #8B4513); /* dark chocolate to light chocolate */
+    -fx-border-color: #D2691E #F5A623 #E9967A #F5A623; /* almond/chocolate tones */
+    -fx-border-width: 2px;
+    -fx-background-radius: 1em 1em 0.5em 1em;
+    -fx-border-radius: 1em 1em 0.5em 1em;
+    -fx-font-family: 'Patrick Hand', sans-serif;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFF8E7;  /* creamy white text */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 2, 0.5, 1, 1 );
+}
+
+/* Chat bubble for reply messages */
+.reply-label {
+    -fx-background-color: linear-gradient(to bottom right, #FFD8A8, #FFE5B4); /* creamy almond gradient */
+    -fx-border-color: #F5A623 #E9967A #F5A623 #D2691E;
+    -fx-border-width: 2px;
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+    -fx-font-family: 'Patrick Hand', sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b3021;  /* chocolate text for contrast */
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.15) , 2, 0.5, 1, 1 );
+}
+
+/* Avatar image styling */
+#displayPicture {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-rotate: 0;
+    -fx-background-radius: 50%;  /* circular avatar */
+}
