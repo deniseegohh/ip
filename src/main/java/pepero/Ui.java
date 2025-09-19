@@ -41,8 +41,7 @@ public class Ui {
 
     /**
      * Prints a message indicating that the given task has been marked as done.
-     *
-     dialogContainer.getChildren().add(
+     * dialogContainer.getChildren().add(
      * @param task the task object that has been marked as completed
      * @return a string representing message indicating given task has been marked as done
      */
