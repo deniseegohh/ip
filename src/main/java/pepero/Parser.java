@@ -132,7 +132,7 @@ public class Parser {
 
         String[] deadlineParts = parts[1].split("/by ", 2);
         if (deadlineParts.length < 2 || deadlineParts[1].trim().isEmpty()) {
-            throw new PeperoException("☹ Deadline must have a valid /by date.");
+            throw new PeperoException("Deadline must have a valid /by date.");
         }
 
         String description = deadlineParts[0];
@@ -141,7 +141,7 @@ public class Parser {
         try {
             return new Deadline(description, LocalDateTime.parse(deadline, formatter));
         } catch (Exception e) {
-            throw new PeperoException("☹ Please enter valid date/time in format ddMMyy HHmm.");
+            throw new PeperoException("Please enter valid date/time in format ddMMyy HHmm :(");
         }
     }
 
@@ -152,7 +152,7 @@ public class Parser {
         String pattern = " /from | /to ";
         String[] eventParts = parts[1].split(pattern);
         if (eventParts.length < 3 || eventParts[1].trim().isEmpty() || eventParts[2].trim().isEmpty()) {
-            throw new PeperoException("☹ Event must include both /from and /to times.");
+            throw new PeperoException("Event must include both /from and /to times :(");
         }
 
         String description = eventParts[0].trim();
@@ -162,7 +162,7 @@ public class Parser {
         try {
             return new Event(description, LocalDateTime.parse(from, formatter), LocalDateTime.parse(to, formatter));
         } catch (Exception e) {
-            throw new PeperoException("☹ Please enter valid date/time in format ddMMyy HHmm.");
+            throw new PeperoException("Please enter valid date/time in format ddMMyy HHmm :(");
         }
     }
 
@@ -191,7 +191,7 @@ public class Parser {
     private static void ensureContains(String input, String... keywords) throws PeperoException {
         for (String keyword : keywords) {
             if (!input.contains(keyword)) {
-                throw new PeperoException("☹ This command must include " + String.join(" and ", keywords) + ".");
+                throw new PeperoException("This command must include " + String.join(" and ", keywords) + ".");
             }
         }
     }

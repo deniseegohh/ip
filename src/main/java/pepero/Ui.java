@@ -46,7 +46,7 @@ public class Ui {
      * @return a string representing message indicating given task has been marked as done
      */
     public String printMarkedTask(Task task) {
-        return "✅ Sweet! This task is all done: \n"
+        return "\uD83C\uDF6B Sweet! This task is all done: \n"
                 + task.getStatusIcon() + " " + task.getDescription() + "\n";
     }
 
@@ -68,7 +68,7 @@ public class Ui {
      * @return a string representing message indicating that the given task has been added to the tasklist
      */
     public String printAddedTask(Task task) {
-        return "✨ Got it! Added this task: " + task;
+        return "\uD83C\uDF6A Got it! Added this task: " + task;
     }
 
     /**
@@ -106,7 +106,7 @@ public class Ui {
     }
 
     public String printUpdatedTask(Task task) {
-        return "✨ Nice! I’ve updated this task:\n" + task;
+        return "\uD83C\uDF6A Nice! I've updated this task:\n" + task;
     }
 
 }
