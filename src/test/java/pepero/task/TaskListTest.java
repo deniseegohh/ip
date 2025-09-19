@@ -2,19 +2,31 @@ package pepero.task;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
 
 public class TaskListTest {
 
     @Test
-    public void deleteTask_invalidIndex_throwsIndexOutOfBoundsException() {
-        TaskList tasks = new TaskList();
-        tasks.addTask(new ToDo("read book"));
+    void findTasks_matchExists_returnsMatchingTasks() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        taskList.addTask(new ToDo("read book"));
+        taskList.addTask(new ToDo("do homework"));
 
-        assertThrows(IndexOutOfBoundsException.class, () -> tasks.deleteTask(2));
+        var results = taskList.findTasks("book");
 
-        assertThrows(IndexOutOfBoundsException.class, () -> tasks.deleteTask(0));
+        assertEquals(1, results.size());
+        assertEquals("read book", results.get(0).getDescription());
+    }
 
-        assertThrows(IndexOutOfBoundsException.class, () -> tasks.deleteTask(-1));
+    @Test
+    void findTasks_noMatch_returnsEmptyList() {
+        TaskList taskList = new TaskList(new ArrayList<>());
+        taskList.addTask(new ToDo("buy chocolate"));
+
+        var results = taskList.findTasks("papaya");
+
+        assertEquals(0, results.size());
     }
 }
