@@ -5,3 +5,4 @@ Improve quality of Parser.java code
 2. Extract logic for index parsing and validation into a separate method to reduce code duplication. (parseAndValidateIndex method)
 
 Improve GUI design
+1. Customised according to the theme of my Chatbot.

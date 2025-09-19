@@ -191,7 +191,7 @@ public class Parser {
     private static void ensureContains(String input, String... keywords) throws PeperoException {
         for (String keyword : keywords) {
             if (!input.contains(keyword)) {
-                throw new PeperoException("☹ OOPS!!! This command must include " + String.join(" and ", keywords) + ".");
+                throw new PeperoException("☹ This command must include " + String.join(" and ", keywords) + ".");
             }
         }
     }
