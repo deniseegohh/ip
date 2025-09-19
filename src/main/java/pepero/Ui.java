@@ -22,7 +22,7 @@ public class Ui {
      * @return a string representing exit message
      */
     public String printExit() {
-        return "Bye bye!~ Hope to see you again soon~";
+        return "\uD83C\uDF6B Bye bye! Hope your day stays as sweet as Pepero! \uD83C\uDF6A";
     }
 
     /**
@@ -32,7 +32,7 @@ public class Ui {
      * @return a string representing list of tasks
      */
     public String printTaskList(TaskList tasks) {
-        StringBuilder sb = new StringBuilder("Here are the tasks in your list: \n");
+        StringBuilder sb = new StringBuilder("Here's a look at your tasks: \n");
         for (int i = 1; i <= tasks.getTasks().size(); i++) {
             sb.append(i).append(".").append(tasks.getTasks().get(i - 1)).append("\n");
         }
@@ -42,11 +42,12 @@ public class Ui {
     /**
      * Prints a message indicating that the given task has been marked as done.
      *
+     dialogContainer.getChildren().add(
      * @param task the task object that has been marked as completed
      * @return a string representing message indicating given task has been marked as done
      */
     public String printMarkedTask(Task task) {
-        return "Nice! I've marked this task as done: \n"
+        return "✅ Sweet! This task is all done: \n"
                 + task.getStatusIcon() + " " + task.getDescription() + "\n";
     }
 
@@ -57,7 +58,7 @@ public class Ui {
      * @return a string representing message indicating that the given task has been marked as undone
      */
     public String printUnmarkedTask(Task task) {
-        return "Okay, I've marked this task as not done yet: \n"
+        return "\uD83C\uDF6A No worries! This task is still pending: \n"
                 + task.getStatusIcon() + " " + task.getDescription() + "\n";
     }
 
@@ -68,7 +69,7 @@ public class Ui {
      * @return a string representing message indicating that the given task has been added to the tasklist
      */
     public String printAddedTask(Task task) {
-        return "added: " + task;
+        return "✨ Got it! Added this task: " + task;
     }
 
     /**
@@ -78,7 +79,7 @@ public class Ui {
      * @return a string representing message that given task has been deleted
      */
     public String printDeletedTask(Task task) {
-        return "I will remove this task: " + task;
+        return "\uD83D\uDC94 Task removed: " + task;
     }
 
     /**
@@ -88,7 +89,7 @@ public class Ui {
      * @return a string representing message indicating number of tasks in the tasklist
      */
     public String printTaskCount(TaskList tasks) {
-        return "Now you have " + tasks.getTasks().size() + " tasks in the list.";
+        return "Now you have " + tasks.getTasks().size() + " tasks to handle \uD83C\uDF6B";
     }
 
     /**
@@ -98,7 +99,7 @@ public class Ui {
      * @return a string representing message indicating the tasks found containing the keyword
      */
     public String printFindResults(ArrayList<Task> tasks) {
-        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
+        StringBuilder sb = new StringBuilder("Here are the matching tasks I found:\n");
         for (int i = 1; i <= tasks.size(); i++) {
             sb.append(i).append(".").append(tasks.get(i - 1)).append("\n");
         }
@@ -106,7 +107,7 @@ public class Ui {
     }
 
     public String printUpdatedTask(Task task) {
-        return "Great! I've updated this task:\n" + task;
+        return "✨ Nice! I’ve updated this task:\n" + task;
     }
 
 }
