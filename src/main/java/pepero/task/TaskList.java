@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Represents a collection of tasks.
  */
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     /**
      * Constructs an empty TaskList.
@@ -34,9 +34,9 @@ public class TaskList {
      *
      * @param index the 1-based index of the task to delete
      */
-    public void deleteTask(int index) {;
+    public void deleteTask(int index) {
         assert(index >= 0 && index < tasks.size());
-        tasks.remove(index - 1);
+        tasks.remove(index);
     }
 
     /**
